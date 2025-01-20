@@ -63,4 +63,17 @@ class ApiRepository {
       return (products: null, error: req.error);
     }
   }
+
+  Future<({List<ProductModel>? cats, String? error})> fetchProducts() async {
+    final req = await apiService.get(
+        endpoint: "https://api.escuelajs.co/api/v1/products");
+    if (req.data != null) {
+      final data = req.data as List;
+      final listOfCats =
+          List<ProductModel>.from(data.map((e) => ProductModel.fromJson(e)));
+      return (cats: listOfCats, error: null);
+    } else {
+      return (cats: null, error: req.error);
+    }
+  }
 }
