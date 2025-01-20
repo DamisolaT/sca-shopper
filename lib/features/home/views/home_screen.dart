@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sca_shopper/services/cache_service.dart';
 import 'package:sca_shopper/shared/Navigation/app_route_strings.dart';
 import 'package:sca_shopper/shared/Navigation/app_router.dart';
@@ -107,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           final category = categories[index];
                           return ReusableListTile(
                             title: category.name ?? "Unknown Category",
-                            subtitle: "",
+                            price: 0.0,
                             imageUrl: category.image ?? "",
                             onTap: () {
                               AppRouter.push(
@@ -165,8 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           final product = products[index];
                           return ReusableListTile(
                             title: product.title ?? "No Title",
-                            subtitle:
-                                "\$${product.price?.toStringAsFixed(2) ?? '0.00'}",
+                            price: 0.0,
                             imageUrl: (product.images?.isNotEmpty ?? false)
                                 ? product.images!.first
                                 : "",
@@ -201,16 +201,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// Reusable ListTile Widget
 class ReusableListTile extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final double? price;
   final String imageUrl;
   final VoidCallback onTap;
 
   const ReusableListTile({
     super.key,
     required this.title,
-    required this.subtitle,
+    required this.price,
     required this.imageUrl,
     required this.onTap,
   });
@@ -238,13 +239,17 @@ class ReusableListTile extends StatelessWidget {
         title.isNotEmpty ? title : "No Title Available",
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
-      subtitle: subtitle.isNotEmpty
-          ? Text(
-              subtitle,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-            )
-          : null,
+      subtitle: Text(
+        formatPrice(price),
+        style: const TextStyle(fontSize: 14, color: Colors.grey),
+      ),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
     );
+  }
+
+  String formatPrice(double? price) {
+    if (price == null) return "N/A";
+    final formatter = NumberFormat.currency(locale: 'en_NG', symbol: '₦');
+    return formatter.format(price);
   }
 }
