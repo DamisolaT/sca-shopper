@@ -16,3 +16,4 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ![image alt](https://github.com/DamisolaT/sca-shopper/blob/e7872ca36f899618a7c65b05aab809df96d7e903/sca-shopper%20img.PNG)
+![image alt](https://github.com/DamisolaT/sca-shopper/blob/af8e56267a02122423e5ba240bec298a7e185e20/sca-shopper%20imgg.PNG)
